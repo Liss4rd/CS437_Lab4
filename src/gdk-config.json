@@ -1,0 +1,16 @@
+{
+  "component": {
+    "COMPONENT_NAME": {
+      "author": "AUTHOR",
+      "version": "1.0.0", 
+      "build": {
+        "build_system": "zip"
+      },
+      "publish": {
+        "bucket": "AWS_BUCKET_NAME",
+        "region": "us-east-2"
+      }
+    }
+  },
+  "gdk_version": "1.0.0"
+}
