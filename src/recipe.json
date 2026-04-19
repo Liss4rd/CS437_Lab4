@@ -1,0 +1,84 @@
+{
+  "RecipeFormatVersion": "2020-01-25",
+  "ComponentName": "COMPONENT_NAME",
+  "ComponentVersion": "1.0.0",
+  "ComponentDescription": "Greengrass component that processes rover MQTT messages and returns max CO2 per vehicle.",
+  "ComponentPublisher": "PUBLISHER",
+  "ComponentConfiguration": {
+    "DefaultConfiguration": {
+      "GGV2PubSubSdkConfig": {
+        "base-pubsub-topic": "PUBSUB_TOPIC",
+        "ipc-subscribe-topics": [],
+        "mqtt-subscribe-topics": [
+          "rover/+/data"
+        ]
+      },
+      "accessControl": {
+        "aws.greengrass.ipc.pubsub": {
+          "COMPONENT_NAME:publish:1": {
+            "policyDescription": "Allows access to publish to IPC topics.",
+            "operations": [
+              "aws.greengrass#PublishToTopic"
+            ],
+            "resources": [
+              "*"
+            ]
+          },
+          "COMPONENT_NAME:subscribe:1": {
+            "policyDescription": "Allows access to subscribe to IPC topics.",
+            "operations": [
+              "aws.greengrass#SubscribeToTopic"
+            ],
+            "resources": [
+              "*"
+            ]
+          }
+        },
+        "aws.greengrass.ipc.mqttproxy": {
+          "COMPONENT_NAME:publish:1": {
+            "policyDescription": "Allows access to publish to MQTT topics.",
+            "operations": [
+              "aws.greengrass#PublishToIoTCore"
+            ],
+            "resources": [
+              "*"
+            ]
+          },
+          "COMPONENT_NAME:subscribe:1": {
+            "policyDescription": "Allows access to subscribe to MQTT topics.",
+            "operations": [
+              "aws.greengrass#SubscribeToIoTCore"
+            ],
+            "resources": [
+              "*"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "Manifests": [
+    {
+      "Name": "Linux",
+      "Platform": {
+        "os": "linux"
+      },
+      "Artifacts": [
+        {
+          "URI": "s3://<AWS_COMPONENT_URI>/src.zip",
+          "Unarchive": "ZIP"
+        }
+      ],
+      "Lifecycle": {
+        "Install": {
+          "Timeout": 300,
+          "Script": "python3 -m pip install awsgreengrasspubsubsdk"
+        },
+        "Run": {
+          "Script": "python3 -u {artifacts:decompressedPath}/src/main.py '{configuration:/GGV2PubSubSdkConfig}'",
+          "RequiresPrivilege": "false"
+        }
+      }
+    }
+  ]
+}
