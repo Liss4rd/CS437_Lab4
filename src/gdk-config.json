@@ -1,13 +1,13 @@
 {
   "component": {
     "COMPONENT_NAME": {
-      "author": "AUTHOR",
-      "version": "1.0.0", 
+      "author": "Lizzy",
+      "version": "1.0.8",
       "build": {
         "build_system": "zip"
       },
       "publish": {
-        "bucket": "AWS_BUCKET_NAME",
+        "bucket": "BUCKET_NAME",
         "region": "us-east-2"
       }
     }
