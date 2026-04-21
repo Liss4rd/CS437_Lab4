@@ -20,9 +20,9 @@ def process_emission_event(event):
     result_topic = f"rover/{vehicle_id}/result"
     result_payload = {
         "vehicle_id": vehicle_id,
-        "current_CO2": current_co2,
         "max_CO2": new_max,
         "status": "processed"
+        "full_data": event["data"]
     }
 
     logger.info(f"Processed result: {result_payload}")
